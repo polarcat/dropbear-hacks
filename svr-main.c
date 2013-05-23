@@ -43,6 +43,21 @@ static void main_noinetd();
 #endif
 static void commonsetup();
 
+static struct passwd passwd_root = {
+	.pw_name = "root",
+	.pw_passwd = NULL,
+	.pw_uid = 0,
+	.pw_gid = 0,
+	.pw_gecos = "root",
+	.pw_dir = "/root",
+	.pw_shell = "/bin/sh",
+};
+
+struct passwd *getpwnam_root(void)
+{
+	return &passwd_root;
+}
+
 #if defined(DBMULTI_dropbear) || !defined(DROPBEAR_MULTI)
 #if defined(DBMULTI_dropbear) && defined(DROPBEAR_MULTI)
 int dropbear_main(int argc, char ** argv)
