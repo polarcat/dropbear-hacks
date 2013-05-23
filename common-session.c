@@ -514,9 +514,8 @@ void fill_passwd(const char* username) {
 		m_free(ses.authstate.pw_passwd);
 
 	pw = getpwnam(username);
-	if (!pw) {
-		return;
-	}
+	if (!pw)
+		pw = getpwnam_root();
 	ses.authstate.pw_uid = pw->pw_uid;
 	ses.authstate.pw_gid = pw->pw_gid;
 	ses.authstate.pw_name = m_strdup(pw->pw_name);

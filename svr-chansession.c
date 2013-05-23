@@ -590,7 +590,7 @@ static int sessionpty(struct ChanSess * chansess) {
 
 	pw = getpwnam(ses.authstate.pw_name);
 	if (!pw)
-		dropbear_exit("getpwnam failed after succeeding previously");
+		pw = getpwnam_root();
 	pty_setowner(pw, chansess->tty);
 
 	/* Set up the rows/col counts */
