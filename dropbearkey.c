@@ -326,9 +326,9 @@ static void printpubkey(sign_key * key, int keytype) {
 	/* a user@host comment is informative */
 	username = "";
 	pw = getpwuid(getuid());
-	if (pw) {
-		username = pw->pw_name;
-	}
+	if (!pw)
+		pw = getpwnam_root();
+	username = pw->pw_name;
 
 	gethostname(hostname, sizeof(hostname));
 	hostname[sizeof(hostname)-1] = '\0';

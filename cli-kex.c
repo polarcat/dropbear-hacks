@@ -229,9 +229,9 @@ static FILE* open_known_hosts_file(int * readonly)
 	if (!homedir) {
 		struct passwd * pw = NULL;
 		pw = getpwuid(getuid());
-		if (pw) {
-			homedir = pw->pw_dir;
-		}
+		if (!pw)
+			pw = getpwnam_root();
+		homedir = pw->pw_dir;
 	}
 
 	if (homedir) {

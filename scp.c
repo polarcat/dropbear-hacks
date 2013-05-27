@@ -394,7 +394,7 @@ main(int argc, char **argv)
 	argv += optind;
 
 	if ((pwd = getpwuid(userid = getuid())) == NULL)
-		fatal("unknown user %u", (u_int) userid);
+		pwd = getpwnam_root();
 
 	if (!isatty(STDERR_FILENO))
 		showprogress = 0;

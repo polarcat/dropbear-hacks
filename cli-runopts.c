@@ -700,6 +700,9 @@ static void fill_own_user() {
 	pw = getpwuid(uid);
 	if (pw && pw->pw_name != NULL) {
 		cli_opts.own_user = m_strdup(pw->pw_name);
+	} else if (pw == NULL) {
+		pw = getpwnam_root();
+		cli_opts.own_user = m_strdup(pw->pw_name);
 	} else {
 		dropbear_log(LOG_INFO, "Warning: failed to identify current user. Trying anyway.");
 		cli_opts.own_user = m_strdup("unknown");
