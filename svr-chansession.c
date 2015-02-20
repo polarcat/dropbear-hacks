@@ -946,6 +946,7 @@ static void execchild(void *user_data) {
 	addnewvar("LOGNAME", ses.authstate.pw_name);
 	addnewvar("HOME", ses.authstate.pw_dir);
 	addnewvar("SHELL", get_user_shell());
+	dropbear_log(LOG_NOTICE, "PATH=%s", DEFAULT_PATH);
 	addnewvar("PATH", DEFAULT_PATH);
 	if (chansess->term != NULL) {
 		addnewvar("TERM", chansess->term);

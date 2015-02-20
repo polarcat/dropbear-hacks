@@ -495,12 +495,17 @@ static long select_timeout() {
 }
 
 const char* get_user_shell() {
+#ifdef ANDROID
+	dropbear_log(LOG_NOTICE, "SHELL=/system/bin/sh");
+	return "/system/bin/sh";
+#else
 	/* an empty shell should be interpreted as "/bin/sh" */
 	if (ses.authstate.pw_shell[0] == '\0') {
 		return "/bin/sh";
 	} else {
 		return ses.authstate.pw_shell;
 	}
+#endif
 }
 void fill_passwd(const char* username) {
 	struct passwd *pw = NULL;
