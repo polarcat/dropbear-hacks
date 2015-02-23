@@ -992,7 +992,11 @@ sink(int argc, char **argv)
 			continue;
 		}
 		omode = mode;
+#ifdef ANDROID
+		mode |= S_IWUSR;
+#else
 		mode |= S_IWRITE;
+#endif
 		if ((ofd = open(np, O_WRONLY|O_CREAT, mode)) < 0) {
 bad:			run_err("%s: %s", np, strerror(errno));
 			continue;
