@@ -1,8 +1,6 @@
 #!/bin/sh
 
-#./configure --disable-lastlog --disable-utmp --disable-utmpx --disable-wtmp \
-#	--disable-wtmpx --disable-loginfunc --disable-pututline \
-#	--disable-pututxline --disable-shadow --disable-syslog \
-#	--disable-openpty
-
-./configure --disable-utmp --disable-utmpx --disable-wtmp --disable-wtmpx --disable-shadow --disable-syslog --disable-lastlog
+./configure --disable-pty --disable-cryptlib \
+	--disable-utmp --disable-utmpx --disable-wtmp \
+	--disable-wtmpx --disable-shadow --disable-syslog \
+	--disable-lastlog --disable-loginfunc --disable-openpty

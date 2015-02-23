@@ -83,8 +83,17 @@ AC_CHECK_DECL(__UCLIBC__,
 	],,,)
 
 # Checks for libraries.
-AC_CHECK_LIB(crypt, crypt, CRYPTLIB="-lcrypt")
-AC_SUBST(CRYPTLIB)	
+AC_ARG_ENABLE(cryptlib,
+	[  --disable-cryptlib          Dont include cryptlib support],
+	[
+		if test "x$enableval" = "xno"; then
+			AC_MSG_NOTICE("Disabling cryptlib")
+		else
+			AC_CHECK_LIB(crypt, crypt, CRYPTLIB="-lcrypt")
+			AC_SUBST(CRYPTLIB)
+		fi
+	]
+)
 
 # Check if zlib is needed
 AC_ARG_WITH(zlib,
@@ -402,20 +411,28 @@ AC_ARG_ENABLE(lastlog,
 	[  --disable-lastlog       Disable use of lastlog even if detected [no]],
 	[ AC_DEFINE(DISABLE_LASTLOG,,Disable use of lastlog()) ]
 )
+AC_ARG_ENABLE(pty,
+	[  --disable-pty          Disable use of pty even if detected [yes]],
+	[ AC_DEFINE(DISABLE_PTY,,Disable use of pty) ]
+)
+AC_ARG_ENABLE(cryptlib,
+	[  --disable-cryptlib          Disable use of cryptlib even if detected [yes]],
+	[ AC_DEFINE(DISABLE_CRYPTLIB,,Disable use of cryptlib) ]
+)
 AC_ARG_ENABLE(utmp,
-	[  --disable-utmp          Disable use of utmp even if detected [no]],
+	[  --disable-utmp          Disable use of utmp even if detected [yes]],
 	[ AC_DEFINE(DISABLE_UTMP,,Disable use of utmp) ]
 )
 AC_ARG_ENABLE(utmpx,
-	[  --disable-utmpx         Disable use of utmpx even if detected [no]],
+	[  --disable-utmpx         Disable use of utmpx even if detected [yes]],
 	[ AC_DEFINE(DISABLE_UTMPX,,Disable use of utmpx) ]
 )
 AC_ARG_ENABLE(wtmp,
-	[  --disable-wtmp          Disable use of wtmp even if detected [no]],
+	[  --disable-wtmp          Disable use of wtmp even if detected [yes]],
 	[ AC_DEFINE(DISABLE_WTMP,,Disable use of wtmp) ]
 )
 AC_ARG_ENABLE(wtmpx,
-	[  --disable-wtmpx         Disable use of wtmpx even if detected [no]],
+	[  --disable-wtmpx         Disable use of wtmpx even if detected [yes]],
 	[ AC_DEFINE(DISABLE_WTMPX,,Disable use of wtmpx) ]
 )
 AC_ARG_ENABLE(loginfunc,

@@ -58,11 +58,11 @@
 #include <dirent.h>
 #include <time.h>
 
-#ifdef HAVE_UTMP_H
+#if defined(HAVE_UTMP_H) && !defined(DISABLE_UTMP)
 #include <utmp.h>
 #endif
 
-#ifdef HAVE_UTMPX_H
+#if defined (HAVE_UTMPX_H) && !defined(DISABLE_UTMPX)
 #include <utmpx.h>
 #endif
 
@@ -100,7 +100,7 @@
 #include <libutil.h>
 #endif
 
-#ifdef HAVE_CRYPT_H
+#if defined(HAVE_CRYPT_H) && !defined(DISABLE_CRYPTLIB)
 #include <crypt.h>
 #endif
 
