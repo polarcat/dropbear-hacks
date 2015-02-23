@@ -162,7 +162,7 @@
  ** prototypes for helper functions in this file
  **/
 
-#if HAVE_UTMP_H
+#if defined(HAVE_UTMP_H) && !defined(DISABLE_UTMP)
 void set_utmp_time(struct logininfo *li, struct utmp *ut);
 void construct_utmp(struct logininfo *li, struct utmp *ut);
 #endif
@@ -473,6 +473,7 @@ line_abbrevname(char *dst, const char *src, size_t dstsize)
 void
 set_utmp_time(struct logininfo *li, struct utmp *ut)
 {
+#if !defined(DISABLE_UTMP)
 # ifdef HAVE_STRUCT_UTMP_UT_TV
 	ut->ut_tv.tv_sec = li->tv_sec;
 	ut->ut_tv.tv_usec = li->tv_usec;
@@ -481,12 +482,14 @@ set_utmp_time(struct logininfo *li, struct utmp *ut)
 	ut->ut_time = li->tv_sec;
 #  endif
 # endif
+#endif /* ! DISABLE_UTMP */
 }
 
 void
 construct_utmp(struct logininfo *li,
 		    struct utmp *ut)
 {
+#if !defined(DISABLE_UTMP)
 # ifdef HAVE_ADDR_V6_IN_UTMP
 	struct sockaddr_in6 *sa6;
 #  endif
@@ -555,6 +558,7 @@ construct_utmp(struct logininfo *li,
 		}
 	}
 # endif
+#endif /* ! DISABLE_UTMP */
 }
 #endif /* USE_UTMP || USE_WTMP || USE_LOGIN */
 
