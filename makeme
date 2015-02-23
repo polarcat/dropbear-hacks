@@ -1,0 +1,20 @@
+#!/bin/sh
+
+mk=Makefile.arm
+export ARCH=arm
+export CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi-
+
+n=$(grep "processor" /proc/cpuinfo | wc -l)
+if [ -z "$n" ]; then
+	n=1
+fi
+
+echo "COMPILE: $CROSS_COMPILE" | grep --color "$CROSS_COMPILE"
+echo "THREADS: $n" | grep --color [0-9]
+
+echo "Distclean? [y/n]" | grep --color -E "\/n"
+read str
+case $str in
+y|yes) make V=1 distclean && make V=1;;
+*) make -f $mk V=1 clean && CFLAGS="-DANDROID" make -j$n -f $mk V=1 STATIC=1 MULTI=1 PROGRAMS="dropbear dbclient dropbearkey dropbearconvert scp";;
+esac
