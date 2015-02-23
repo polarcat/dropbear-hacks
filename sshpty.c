@@ -27,7 +27,7 @@
 #undef HAVE_DEV_PTMX
 #endif
 
-#ifdef HAVE_PTY_H
+#if defined(HAVE_PTY_H) && !defined(DISABLE_PTY)
 # include <pty.h>
 #endif
 #if defined(USE_DEV_PTMX) && defined(HAVE_STROPTS_H)
