@@ -1,8 +1,19 @@
 #!/bin/sh
 
-mk=Makefile.arm
-export ARCH=arm
-export CROSS_COMPILE=armv7a-hardfloat-linux-gnueabi-
+if [ -z "$ANDK" ]; then
+	echo "ANDK does not point at android ndk home"
+	exit 1
+fi
+
+VER=android-21
+ARCH=arm
+CROSS_COMPILE=arm-linux-androideabi-
+LDFLAGS="--sysroot=$ANDK/platforms/$VER/arch-$ARCH"
+LDFLAGS=$LDFLAGS" -L$ANDK/platforms/$VER/arch-$ARCH/usr/lib"
+CFLAGS="-I$ANDK/platforms/$VER/arch-$ARCH/usr/include"
+CFLAGS=$CFLAGS" -DANDROID"
+
+export ARCH CROSS_COMPILE CFLAGS LDFLAGS
 
 n=$(grep "processor" /proc/cpuinfo | wc -l)
 if [ -z "$n" ]; then
@@ -16,5 +27,6 @@ echo "Distclean? [y/n]" | grep --color -E "\/n"
 read str
 case $str in
 y|yes) make V=1 distclean && make V=1;;
-*) make -f $mk V=1 clean && CFLAGS="-DANDROID" make -j$n -f $mk V=1 STATIC=1 MULTI=1 PROGRAMS="dropbear dbclient dropbearkey dropbearconvert scp";;
+*) make V=1 clean && make -j$n V=1 STATIC=1 MULTI=1 \
+	PROGRAMS="dropbear dbclient dropbearkey dropbearconvert scp";;
 esac
