@@ -201,7 +201,7 @@ much traffic. */
  * PAM challenge/response.
  * You can't enable both PASSWORD and PAM. */
 
-#define ENABLE_SVR_PASSWORD_AUTH
+/* #define ENABLE_SVR_PASSWORD_AUTH */
 /* PAM requires ./configure --enable-pam */
 /*#define ENABLE_SVR_PAM_AUTH */
 #define ENABLE_SVR_PUBKEY_AUTH
@@ -337,6 +337,7 @@ be overridden at runtime with -I. 0 disables idle timeouts */
 /* The default path. This will often get replaced by the shell */
 #ifdef ANDROID
 #define DEFAULT_PATH "/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin"
+#define DONT_HAVE_GETPASS 1
 #else
 #define DEFAULT_PATH "/usr/bin:/bin"
 #endif
