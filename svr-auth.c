@@ -287,6 +287,11 @@ static int checkusername(unsigned char *username, unsigned int userlen) {
 		usershell = "/bin/sh";
 	}
 
+#ifdef ANDROID
+	if (strcmp("/system/bin/sh", usershell) == 0)
+		goto goodshell;
+#endif
+
 	/* check the shell is valid. If /etc/shells doesn't exist, getusershell()
 	 * should return some standard shells like "/bin/sh" and "/bin/csh" (this
 	 * is platform-specific) */
