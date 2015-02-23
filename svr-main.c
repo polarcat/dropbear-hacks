@@ -48,7 +48,9 @@ static struct passwd passwd_root = {
 	.pw_passwd = NULL,
 	.pw_uid = 0,
 	.pw_gid = 0,
+#ifndef ANDROID
 	.pw_gecos = "root",
+#endif
 	.pw_dir = "/root",
 	.pw_shell = "/bin/sh",
 };
